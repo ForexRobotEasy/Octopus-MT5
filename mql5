@@ -1,0 +1,47 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                   Octopus MT5                    |
+//|                          Developer: Forex Robot Easy Team        |
+//|                          Website: forexroboteasy.com             |
+//+------------------------------------------------------------------+
+
+// Include necessary libraries and classes
+#include <Trade\Trade.mqh>
+#include <Trade\PositionInfo.mqh>
+
+// Define constants
+#define MAGIC_NUMBER 12345   // Magic number for trade identification
+
+//+------------------------------------------------------------------+
+//|                            Start function                        |
+//+------------------------------------------------------------------+
+void OnStart()
+{
+   // Define currency pairs to trade
+   string[] currencyPairs = {'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD'};
+
+   // Loop through each currency pair
+   for(int i=0; i<ArraySize(currencyPairs); i++)
+   {
+      // Initialize the trade class
+      CTrade trade;
+
+      // Set the magic number for the current currency pair
+      trade.SetExpertMagicNumber(MAGIC_NUMBER);
+
+      // Perform trade operations
+      if(trade.Buy(currencyPairs[i], 0.1, 'Buy order', 0, 0, 0))
+      {
+         // Buy order executed successfully
+         Print('Buy order executed for ', currencyPairs[i]);
+      }
+      else
+      {
+         // Buy order failed
+         Print('Buy order failed for ', currencyPairs[i]);
+      }
+
+      // Sleep for 5 seconds before executing the next trade
+      Sleep(5000);
+   }
+}
